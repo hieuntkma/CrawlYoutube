@@ -1,0 +1,38 @@
+{
+    "error": "'richGridRenderer'",
+    "contents": {
+        "twoColumnBrowseResultsRenderer": {
+            "tabs": [
+                {
+                    "tabRenderer": {
+                        "title": "Home",
+                        "selected": true,
+                        "content": {
+                            "sectionListRenderer": {
+                                "contents": [
+                                    {
+                                        "channelOwnerEmptyStateRenderer": {
+                                            "illustration": {
+                                                "thumbnails": [
+                                                    {
+                                                        "url": "https://www.gstatic.com/youtube/img/channels/mobile/empty_channel/light_800x800.png"
+                                                    }
+                                                ]
+                                            },
+                                            "description": {
+                                                "simpleText": "This channel doesn't have any content"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "trackingParams": "CBwQui8iEwi1v8r81JKKAxXvS_UFHVJFK_Q=",
+                                "disablePullToRefresh": true
+                            }
+                        },
+                        "trackingParams": "CBsQ8JMBGAUiEwi1v8r81JKKAxXvS_UFHVJFK_Q="
+                    }
+                }
+            ]
+        }
+    }
+}
