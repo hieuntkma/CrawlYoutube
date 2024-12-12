@@ -44,17 +44,17 @@ async def main():
             # video_count = await crawl_youtube_data(encoded_keywords_search("SHB"), wait_time)
             
             if video_count < 5:
-                print("Chờ 2 giây trước khi crawl từ khóa tiếp theo")
-                await asyncio.sleep(120)
+                print("Chờ 5 giây trước khi crawl từ khóa tiếp theo")
+                await asyncio.sleep(5)
             elif video_count <= 30:
-                print("Chờ 5 phút trước khi crawl từ khóa tiếp theo")
-                await asyncio.sleep(300)
+                print("Chờ 2 phút trước khi crawl từ khóa tiếp theo")
+                await asyncio.sleep(120)
             elif video_count <= 100:
-                print("Chờ 15 phút trước khi crawl từ khóa tiếp theo...")
-                await asyncio.sleep(900)
+                print("Chờ 5 phút trước khi crawl từ khóa tiếp theo...")
+                await asyncio.sleep(300)
             else:
-                print("Chờ 15 phút trước khi crawl từ khóa tiếp theo...")
-                await asyncio.sleep(1800)
+                print("Chờ 10 phút trước khi crawl từ khóa tiếp theo...")
+                await asyncio.sleep(1200)
             
 if __name__ == "__main__":
     asyncio.run(main())

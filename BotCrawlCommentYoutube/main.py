@@ -35,8 +35,6 @@ def fetch_data():
         datas = json_data.get("hits", {}).get("hits", [])
 
         current_time = datetime.now()
-        print(len(datas))
-        print(start_index)
 
         for item in datas:
             source_data = item.get("_source", {})
@@ -46,11 +44,11 @@ def fetch_data():
 
             if url and auth_name and pub_time:
                 pub_datetime = datetime.fromtimestamp(pub_time)
-                print(pub_datetime)
+                
                 if current_time - pub_datetime <= timedelta(days=BOT_CONFIG['crawl_config']['pub_day_range']):
                     data.append({"url": url, "auth_name": auth_name})
                 else:
-                    print("Thời gian video không hợp lệ, kết thúc lấy dữ liệu.")
+                    print(f"Đã lấy được {len(data)} bài từ bể")
                     flag = False
                     break
             else:
@@ -68,17 +66,18 @@ async def main():
         for video_data in fetch_data():
         # for video_data in url:
             video_url = video_data["url"]
+            print("crawl url : " + video_url )
             auth_name = video_data["auth_name"]
             if auth_name and video_url:
                 check_comment_flag = await crawl_comment_youtube_data(video_url,auth_name)
                 if check_comment_flag:
-                    print("cho 5p")
+                    print("chờ 5p sang bài tiếp theo")
                     await asyncio.sleep(300)
                 else:
-                    print("kh co cmt tiep")
+                    print("Không có comment")
                     continue
         
-        await asyncio.sleep(BOT_CONFIG['crawl_config']['sleep_time'])
+        # await asyncio.sleep(BOT_CONFIG['crawl_config']['sleep_time'])
 
 if __name__ == "__main__":
     asyncio.run(main())

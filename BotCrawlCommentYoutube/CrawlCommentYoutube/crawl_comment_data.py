@@ -73,9 +73,7 @@ async def process_comments(page):
     for comment in comment_elements:
         # Mở tất cả các trả lời của bình luận
         await click_more_replies(comment)
-
-        print("Chuyển sang bình luận tiếp theo.")
-        
+    
         # Mở thêm các trả lời nếu có nút 'Show more replies'
         reply_elements = await comment.query_selector_all("ytd-comment-replies-renderer")
         for reply_element in reply_elements:
@@ -86,12 +84,14 @@ async def crawl_comment_youtube_data(video_url, auth_name):
     check_comment_flag = False
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
-        # context = await browser.new_context(viewport={"width": 400, "height": 800})
-        # page = await context.new_page()
-        page = await browser.new_page()
+        context = await browser.new_context(
+                locale='en-US',  # Đặt ngôn ngữ thành tiếng Anh
+                # timezone_id='America/New_York'
+                )
+        page = await context.new_page()
 
         async def handle_response(response):
-            nonlocal check_comment_flag  # Declare the variable from the outer scope
+            nonlocal check_comment_flag 
             url = response.url
             # if '/youtubei/v1/player' in url:
             if 'youtubei/v1/next' in url:
@@ -108,7 +108,6 @@ async def crawl_comment_youtube_data(video_url, auth_name):
                             comment_entity_payload = payload.get("commentEntityPayload")
                             if comment_entity_payload:
                                 responses.append(comment_entity_payload)
-                                print("Đã lấy được commentEntityPayload:")
                                 if len(responses) >=  50:
                                     convert_comment_data(responses, video_url, auth_name)
                                     responses.clear()
@@ -180,7 +179,6 @@ def convert_to_timestamp_for_comment(relative_time):
 
             return timestamp
 
-        # Nếu không khớp với định dạng
         print("Định dạng thời gian không hợp lệ.")
         return None
 
@@ -296,7 +294,7 @@ def convert_comment_data(responses, url, auth_name):
         
     if data:
         print(f"Gửi {len(data)} bài viết lên API")
-        send_data_to_api(data)  # Gửi dữ liệu lên API
+        send_data_to_api(data)
         data.clear()
 
 

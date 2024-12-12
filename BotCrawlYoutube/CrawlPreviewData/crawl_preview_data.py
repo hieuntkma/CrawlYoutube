@@ -6,6 +6,7 @@ import re
 from slugify import slugify
 import os
 from langdetect import detect, DetectorFactory
+import urllib.parse
 
 
 from BotConfig.bot_config import BOT_CONFIG
@@ -31,7 +32,10 @@ async def scroll_to_bottom(page):
 async def crawl_youtube_data(search_query, wait_time):
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
+        context = await browser.new_context(
+                locale='en-US',  # Đặt ngôn ngữ thành tiếng Anh
+                )
+        page = await context.new_page()
 
         async def handle_response(response):
             url = response.url
@@ -71,8 +75,8 @@ async def crawl_youtube_data(search_query, wait_time):
                     print(f"{e}")
 
         page.on('response', handle_response)
-
-        print(f'Tìm kiếm video với từ khóa: {search_query}')
+        decoded_query = urllib.parse.unquote(search_query)
+        print(f'Tìm kiếm video với từ khóa: {decoded_query}')
         #search theo ngày
         await page.goto(f'https://www.youtube.com/results?search_query={search_query}&sp={BOT_CONFIG["crawl_config"]["filter_video"]["today_upload_date"]}')
         #search theo tuần
@@ -83,8 +87,6 @@ async def crawl_youtube_data(search_query, wait_time):
         print(f"Số lượng video tìm thấy: {len(video_elements)}")
         
         for i, video_element in enumerate(video_elements):
-            print(search_query)
-            print(f'Di chuột vào video thứ {i + 1}')
             await video_element.hover()
             await asyncio.sleep(wait_time)
 

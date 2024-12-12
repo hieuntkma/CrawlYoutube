@@ -52,10 +52,10 @@ async def main():
                                                                           org_ids)
                 
                 if responses_videos:
-                    print("cho 5p")
+                    print("Chờ 5p sang bài tiếp theo")
                     await asyncio.sleep(300)
                 else:
-                    print("Khong lay duoc video")
+                    print("Không có bài viết")
                     continue
 
         await asyncio.sleep(BOT_CONFIG['crawl_config']['sleep_time'])

@@ -61,7 +61,6 @@ async def crawl_follow_youtube_videos_data(channel_url,auth_id,auth_name, org_id
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(
                 locale='en-US',  # Đặt ngôn ngữ thành tiếng Anh
-                # timezone_id='America/New_York'  # Cấu hình múi giờ nếu cần
                 )
         page = await context.new_page()
 

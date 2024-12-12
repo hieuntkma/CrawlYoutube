@@ -25,10 +25,11 @@ try:
     else:
         DB_ABPCrawlYTB = db["youtube_posts_temp"]
         DB_keyword = db["facebook_keyword_tt"]
+        DB_source_crawl = db["source_crawl"]
     print("Ket noi thanh cong")
-    
+    # a = DB_keyword.find({"keyWord":"T&T GROUP"})
+
+        
 except Exception as xx:
     print(xx)
-
-
 
